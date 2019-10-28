@@ -1,3 +1,14 @@
+Point of this fork: `postcss-import` does not pass down the name of the file from which the import is made, which is important in our use case. For example, with files like this
+```
+base/
+├─ header.css
+├─ footer.css
+└─ overrides/
+   ├─ header.css
+   └─ footer.css
+```
+An `@import header.css` from `base/overrides/header.css` needs to resolve to `base/header.css`, but if done from `base/overrides/footer.css` it needs to resolve to `base/overrides/header.css`.
+
 # postcss-import
 
 [![Unix Build status](https://img.shields.io/travis/postcss/postcss-import/master.svg?branch=master&label=unix%20build)](https://travis-ci.org/postcss/postcss-import)
