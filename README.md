@@ -9,6 +9,8 @@ base/
 ```
 An `@import header.css` from `base/overrides/header.css` needs to resolve to `base/header.css`, but if done from `base/overrides/footer.css` it needs to resolve to `base/overrides/header.css`.
 
+Note: this feature was requested in a pull request [here](https://github.com/postcss/postcss-import/pull/306), but was deemed unnecessary by the maintainers.
+
 # postcss-import
 
 [![Unix Build status](https://img.shields.io/travis/postcss/postcss-import/master.svg?branch=master&label=unix%20build)](https://travis-ci.org/postcss/postcss-import)
