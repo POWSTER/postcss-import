@@ -39,14 +39,27 @@ test("should resolve local modules", checkFixture, "resolve-local-modules", {
   path: null,
 })
 
-test("should resolve local modules", checkFixture, "resolve-path-modules", {
-  path: "test/fixtures/imports/modules",
-})
+test(
+  "should resolve modules with path option",
+  checkFixture,
+  "resolve-path-modules",
+  {
+    path: "test/fixtures/imports/modules",
+  }
+)
 
 test(
   "should be able to consume npm package or local modules",
   checkFixture,
   "resolve-modules",
+  { path: null },
+  { from: "test/fixtures/imports/foo.css" }
+)
+
+test(
+  "should be able to consume npm sub packages",
+  checkFixture,
+  "resolve-npm-subpackages",
   { path: null },
   { from: "test/fixtures/imports/foo.css" }
 )

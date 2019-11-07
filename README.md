@@ -1,8 +1,23 @@
+Point of this fork: `postcss-import` does not pass down the name of the file from which the import is made, which is important in our use case. For example, with files like this
+```
+base/
+├─ header.css
+├─ footer.css
+└─ overrides/
+   ├─ header.css
+   └─ footer.css
+```
+An `@import header.css` from `base/overrides/header.css` needs to resolve to `base/header.css`, but if done from `base/overrides/footer.css` it needs to resolve to `base/overrides/header.css`.
+
+Note: this feature was requested in a pull request [here](https://github.com/postcss/postcss-import/pull/306), but was deemed unnecessary by the maintainers.
+
 # postcss-import
 
 [![Unix Build status](https://img.shields.io/travis/postcss/postcss-import/master.svg?branch=master&label=unix%20build)](https://travis-ci.org/postcss/postcss-import)
 [![Windows Build status](https://img.shields.io/appveyor/ci/MoOx/postcss-import/master.svg?label=window%20build)](https://ci.appveyor.com/project/MoOx/postcss-import/branch/master)
 [![Version](https://img.shields.io/npm/v/postcss-import.svg)](https://github.com/postcss/postcss-import/blob/master/CHANGELOG.md)
+[![Greenkeeper badge](https://badges.greenkeeper.io/postcss/postcss-import.svg)](https://greenkeeper.io/)
+
 
 > [PostCSS](https://github.com/postcss/postcss) plugin to transform `@import`
 rules by inlining content.
@@ -33,6 +48,8 @@ If this behavior is not what you want, look at `skipDuplicates` option
 please look at
 [postcss-easy-import](https://github.com/trysound/postcss-easy-import)
 (which use this plugin under the hood).
+- Imports which are not modified (by `options.filter` or because they are remote
+  imports) are moved to the top of the output.
 - **This plugin attempts to follow the CSS `@import` spec**; `@import`
   statements must precede all other statements (besides `@charset`).
 
@@ -107,6 +124,14 @@ body {
 Checkout the [tests](test) for more examples.
 
 ### Options
+
+### `filter`
+Type: `Function`  
+Default: `() => true`
+
+Only transform imports for which the test function returns `true`. Imports for
+which the test function returns `false` will be left as is. The function gets
+the path to import as an argument and should return a boolean.
 
 #### `root`
 
